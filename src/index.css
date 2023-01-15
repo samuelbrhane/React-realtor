@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .showSidemenu {
+    @apply right-0 transition-all duration-[1s];
+  }
+
+  .hideSidemenu {
+    @apply right-[-999px] transition-all duration-[3s];
+  }
+  .link {
+    @apply cursor-pointer hover:scale-105 hover:text-red-600;
+  }
+}
