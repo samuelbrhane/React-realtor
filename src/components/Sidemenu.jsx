@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Sidemenu = ({ showSidemenu }) => {
   return (
     <div
@@ -5,10 +7,16 @@ const Sidemenu = ({ showSidemenu }) => {
         showSidemenu ? "showSidemenu" : "hideSidemenu"
       }`}
     >
-      <ul className="items-center  space-y-4 flex-col pt-6">
-        <li className="link">Home</li>
-        <li className="link">Offers</li>
-        <li className="link">Sign In</li>
+      <ul className="items-center flex space-y-4 flex-col pt-6">
+        <Link to="/" className="link">
+          Home
+        </Link>
+        <Link to="/offers" className="link">
+          Offers
+        </Link>
+        <Link to="/login" className="link">
+          Login
+        </Link>
       </ul>
     </div>
   );

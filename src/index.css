@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-[#f3eeee];
+  }
+}
+
 @layer components {
   .showSidemenu {
     @apply right-0 transition-all duration-[1s];
@@ -12,5 +18,14 @@
   }
   .link {
     @apply cursor-pointer hover:scale-105 hover:text-red-600;
+  }
+  .inputs {
+    @apply w-full outline-none px-3 py-2 rounded mb-2;
+  }
+  .authBtn {
+    @apply py-2 w-full rounded hover:scale-105 uppercase font-semibold;
+  }
+  .line {
+    @apply w-[140px] md:w-[160px] h-[1px] bg-gray-400;
   }
 }
