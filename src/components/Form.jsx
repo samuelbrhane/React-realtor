@@ -1,9 +1,13 @@
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
-const Form = ({ inputData, setInputData, head }) => {
+const Form = ({ inputData, setInputData, head, registerUser, loginUser }) => {
   return (
-    <form className="pb-8 md:w-[400px] w-full px-4">
+    <form
+      className="pb-8 md:w-[400px] w-full px-4"
+      autoComplete="off"
+      autoSave="off"
+    >
       {head === "Register" && (
         <input
           className="inputs"
@@ -59,7 +63,11 @@ const Form = ({ inputData, setInputData, head }) => {
         </Link>
       </div>
 
-      <button type="submit" className="bg-[#83ed83] authBtn">
+      <button
+        type="submit"
+        className="bg-[#83ed83] authBtn"
+        onClick={head === "Register" ? registerUser : loginUser}
+      >
         {head === "Register" ? "Register" : "Login"}
       </button>
       <div className="flex items-center justify-center gap-2 my-3">
@@ -67,7 +75,10 @@ const Form = ({ inputData, setInputData, head }) => {
         <p>OR</p>
         <div className="line" />
       </div>
-      <button className="bg-[#9bd4f3] flex items-center justify-center gap-2 authBtn">
+      <button
+        type="button"
+        className="bg-[#9bd4f3] flex items-center justify-center gap-2 authBtn"
+      >
         <FcGoogle />
         <p>{head === "Register" ? "Register" : "Continue"} with google</p>
       </button>
