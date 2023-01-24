@@ -3,15 +3,29 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { Sidemenu } from ".";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/config";
 
 const Header = () => {
   const [showSidemenu, setShowSidemenu] = useState(false);
+  const [userLogin, setUserLogin] = useState("Login");
   const location = useLocation();
 
   // Current Page(Route)
   const pathRoute = (route) => {
     return route === location.pathname;
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserLogin("Profile");
+      } else {
+        setUserLogin("Login");
+      }
+    });
+  });
 
   return (
     <>
@@ -52,10 +66,12 @@ const Header = () => {
             <Link
               to="/login"
               className={`link ${
-                pathRoute("/login") ? "border-b-2 border-blue-400" : ""
+                pathRoute(`/${userLogin.toLocaleLowerCase()}`)
+                  ? "border-b-2 border-blue-400"
+                  : ""
               }`}
             >
-              Login
+              {userLogin}
             </Link>
           </ul>
         </div>

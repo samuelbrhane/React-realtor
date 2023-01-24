@@ -2,7 +2,8 @@ import Header from "./Header";
 import Sidemenu from "./Sidemenu";
 import Auth from "./Auth";
 import Form from "./Form";
-import PrivateRoute from "./PrivateRoute";
+import ProfileRoute from "./ProfileRoute";
 import Spinner from "./Spinner";
+import AuthRoute from "./AuthRoute";
 
-export { Header, Sidemenu, Auth, Form, PrivateRoute, Spinner };
+export { Header, Sidemenu, Auth, Form, ProfileRoute, Spinner, AuthRoute };
