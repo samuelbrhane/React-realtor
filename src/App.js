@@ -1,5 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Register, Login, Forget, Offers, Profile } from "./pages";
+import {
+  Home,
+  Register,
+  Login,
+  Forget,
+  Offers,
+  Profile,
+  CreateList,
+} from "./pages";
 import { Header, ProfileRoute, AuthRoute } from "./components";
 
 const App = () => {
@@ -20,6 +28,7 @@ const App = () => {
           <Route path="/profile" element={<ProfileRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
+          <Route path="/createList" element={<CreateList />} />
         </Routes>
       </BrowserRouter>
     </main>

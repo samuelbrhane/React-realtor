@@ -28,4 +28,7 @@
   .line {
     @apply w-[140px] md:w-[160px] h-[1px] bg-gray-400;
   }
+  .typeBtn {
+    @apply w-[160px] md:w-[200px] shadow-lg hover:shadow-xl px-2 py-1 rounded uppercase;
+  }
 }

@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signOut, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase/config";
 import { doc, updateDoc } from "firebase/firestore";
+import { ProfileForm } from "../components";
+import { FcHome } from "react-icons/fc";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -35,50 +37,22 @@ const Profile = () => {
   };
 
   return (
-    <div className="mt-6 flex items-center justify-center">
-      <form
-        className="pb-8 md:w-[400px] w-full px-4"
-        autoComplete="off"
-        autoSave="off"
-      >
-        <h1 className="text-xl md:text-2xl font-bold mb-3 mt-2 text-center text-red-400">
-          My <span className="text-black">Profile</span>
-        </h1>
-        <input
-          className={`inputs ${changeData ? "bg-gray-300" : "bg-gray-100"}`}
-          type="text"
-          value={userData.fullName}
-          disabled={!changeData}
-          onChange={(e) =>
-            setUserData({ ...userData, fullName: e.target.value })
-          }
-        />
-        <input
-          className="inputs bg-gray-100"
-          type="email"
-          value={userData.email}
-          disabled
-        />
-        <div className="text-[12px] sm:text-sm md:text-[16px] font-light mb-4 flex justify-between items-center px-2">
-          <p className="mb-2">
-            Change User Name? {""}
-            <button
-              className="text-blue-600 hover:text-blue-500 font-semibold"
-              onClick={handleChangeData}
-            >
-              {changeData ? "Apply Change" : "Edit"}
-            </button>
-          </p>
-
-          <button
-            className="text-blue-600 hover:text-blue-500 font-semibold"
-            onClick={handleSignout}
-          >
-            Sign out
+    <>
+      <ProfileForm
+        userData={userData}
+        setUserData={setUserData}
+        handleChangeData={handleChangeData}
+        handleSignout={handleSignout}
+        changeData={changeData}
+      />
+      <div className="flex justify-center">
+        <Link to="/createList">
+          <button className="bg-blue-500 px-6 py-2 rounded-md flex gap-2 items-center text-white uppercase hover:scale-105 hover:bg-blue-400">
+            <FcHome className="text-xl" /> <p>Sell or rent your home</p>
           </button>
-        </div>
-      </form>
-    </div>
+        </Link>
+      </div>
+    </>
   );
 };
 

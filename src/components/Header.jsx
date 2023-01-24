@@ -64,7 +64,7 @@ const Header = () => {
               Offers
             </Link>
             <Link
-              to="/login"
+              to={`/${userLogin.toLocaleLowerCase()}`}
               className={`link ${
                 pathRoute(`/${userLogin.toLocaleLowerCase()}`)
                   ? "border-b-2 border-blue-400"
