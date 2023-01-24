@@ -1,15 +1,37 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { signOut, updateProfile } from "firebase/auth";
+import { auth, db } from "../firebase/config";
+import { doc, updateDoc } from "firebase/firestore";
 
 const Profile = () => {
-  const [fullName, setFullName] = useState("");
   const navigate = useNavigate();
+  const [changeData, setChangeData] = useState(false);
+  const [userData, setUserData] = useState({
+    fullName: auth.currentUser.displayName,
+    email: auth.currentUser.email,
+  });
 
+  // Sign out user
   const handleSignout = () => {
     signOut(auth);
     navigate("/login");
+  };
+
+  // handle user name change
+  const handleChangeData = async (e) => {
+    e.preventDefault();
+    const { fullName } = userData;
+    setChangeData((prev) => !prev);
+    if (changeData && auth.currentUser.displayName !== fullName) {
+      // change user name in firebase auth
+      await updateProfile(auth.currentUser, {
+        displayName: fullName,
+      });
+
+      // change user name in firebase storage
+      await updateDoc(doc(db, "users", auth.currentUser.uid), { fullName });
+    }
   };
 
   return (
@@ -23,22 +45,28 @@ const Profile = () => {
           My <span className="text-black">Profile</span>
         </h1>
         <input
-          className="inputs bg-gray-200"
+          className={`inputs ${changeData ? "bg-gray-300" : "bg-gray-100"}`}
           type="text"
-          value="samuel brhane"
-          disabled
+          value={userData.fullName}
+          disabled={!changeData}
+          onChange={(e) =>
+            setUserData({ ...userData, fullName: e.target.value })
+          }
         />
         <input
-          className="inputs bg-gray-200"
+          className="inputs bg-gray-100"
           type="email"
-          value="1samibrhane@gmail.com"
+          value={userData.email}
           disabled
         />
         <div className="text-[12px] sm:text-sm md:text-[16px] font-light mb-4 flex justify-between items-center px-2">
           <p className="mb-2">
-            Change User Name?
-            <button className="text-blue-600 hover:text-blue-500 font-semibold">
-              Edit
+            Change User Name? {""}
+            <button
+              className="text-blue-600 hover:text-blue-500 font-semibold"
+              onClick={handleChangeData}
+            >
+              {changeData ? "Apply Change" : "Edit"}
             </button>
           </p>
 
