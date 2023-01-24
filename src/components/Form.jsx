@@ -1,7 +1,14 @@
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 
-const Form = ({ inputData, setInputData, head, registerUser, loginUser }) => {
+const Form = ({
+  inputData,
+  setInputData,
+  head,
+  registerUser,
+  loginUser,
+  googleClick,
+}) => {
   return (
     <form
       className="pb-8 md:w-[400px] w-full px-4"
@@ -78,6 +85,7 @@ const Form = ({ inputData, setInputData, head, registerUser, loginUser }) => {
       <button
         type="button"
         className="bg-[#9bd4f3] flex items-center justify-center gap-2 authBtn"
+        onClick={googleClick}
       >
         <FcGoogle />
         <p>{head === "Register" ? "Register" : "Continue"} with google</p>

@@ -5,9 +5,11 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../firebase/config";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const toastOptions = {
@@ -61,6 +63,29 @@ const Auth = ({ head }) => {
         password
       );
       const user = userCredential.user;
+      console.log(user);
+      navigate("/");
+    } catch (error) {
+      toast.error(error.code.replace("auth/", ""), toastOptions);
+    }
+  };
+
+  // Google Authentication
+  const googleClick = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // check if user already exists
+      const userExist = await getDoc(doc(db, "users", user.uid));
+      if (!userExist.exists()) {
+        await setDoc(doc(db, "users", user.uid), {
+          fullName: user.displayName,
+          email: user.email,
+          timestamp: serverTimestamp(),
+        });
+      }
       navigate("/");
     } catch (error) {
       toast.error(error.code.replace("auth/", ""), toastOptions);
@@ -80,6 +105,7 @@ const Auth = ({ head }) => {
             head={head}
             registerUser={registerUser}
             loginUser={loginUser}
+            googleClick={googleClick}
           />
         </div>
       </div>
