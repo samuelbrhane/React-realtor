@@ -12,15 +12,6 @@ import { auth, db } from "../firebase/config";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const toastOptions = {
-  position: "bottom-center",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  theme: "colored",
-};
 
 const Auth = ({ head }) => {
   const [inputData, setInputData] = useState({
@@ -48,7 +39,7 @@ const Auth = ({ head }) => {
       await setDoc(doc(db, "users", user.uid), userData);
       navigate("/");
     } catch (error) {
-      toast.error(error.code.replace("auth/", ""), toastOptions);
+      toast.error(error.code.replace("auth/", ""));
     }
   };
 
@@ -66,7 +57,7 @@ const Auth = ({ head }) => {
       console.log(user);
       navigate("/");
     } catch (error) {
-      toast.error(error.code.replace("auth/", ""), toastOptions);
+      toast.error(error.code.replace("auth/", ""));
     }
   };
 
@@ -88,7 +79,7 @@ const Auth = ({ head }) => {
       }
       navigate("/");
     } catch (error) {
-      toast.error(error.code.replace("auth/", ""), toastOptions);
+      toast.error(error.code.replace("auth/", ""));
     }
   };
 
@@ -109,7 +100,18 @@ const Auth = ({ head }) => {
           />
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 };
