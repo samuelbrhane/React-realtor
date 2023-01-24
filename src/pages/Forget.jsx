@@ -17,7 +17,7 @@ const Forget = () => {
       toast.success("Password reset email sent!");
       navigate("/login");
     } catch (error) {
-      toast.error(error.code.replace("auth/", ""));
+      toast.error("Couldn't send reset email!");
     }
   };
   return (
