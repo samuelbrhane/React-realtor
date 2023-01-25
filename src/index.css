@@ -10,7 +10,7 @@
 
 @layer components {
   .showSidemenu {
-    @apply right-0 transition-all duration-[1s];
+    @apply right-0 transition-all duration-[1s] z-10;
   }
 
   .hideSidemenu {

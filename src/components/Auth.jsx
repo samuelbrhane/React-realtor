@@ -85,7 +85,7 @@ const Auth = ({ head }) => {
 
   return (
     <>
-      <div>
+      <div className="mt-20">
         <h1 className="text-center text-xl mt-4 md:text-2xl font-bold mb-6">
           {head}
         </h1>

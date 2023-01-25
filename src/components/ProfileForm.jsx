@@ -6,9 +6,9 @@ const ProfileForm = ({
   changeData,
 }) => {
   return (
-    <div className="mt-6 flex items-center justify-center">
+    <div className="flex items-center justify-center pt-20">
       <form
-        className="pb-8 md:w-[400px] w-full px-4"
+        className="pb-2 md:w-[400px] w-full px-4"
         autoComplete="off"
         autoSave="off"
       >

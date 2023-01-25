@@ -2,7 +2,7 @@ import Header from "./Header";
 import Sidemenu from "./Sidemenu";
 import Auth from "./Auth";
 import Form from "./Form";
-import ProfileRoute from "./ProfileRoute";
+import ProtectRoute from "./ProtectRoute";
 import Spinner from "./Spinner";
 import AuthRoute from "./AuthRoute";
 import ProfileForm from "./ProfileForm";
@@ -13,7 +13,7 @@ export {
   Sidemenu,
   Auth,
   Form,
-  ProfileRoute,
+  ProtectRoute,
   Spinner,
   AuthRoute,
   ProfileForm,

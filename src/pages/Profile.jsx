@@ -47,7 +47,7 @@ const Profile = () => {
       />
       <div className="flex justify-center">
         <Link to="/createList">
-          <button className="bg-blue-500 px-6 py-2 rounded-md flex gap-2 items-center text-white uppercase hover:scale-105 hover:bg-blue-400">
+          <button className="bg-blue-500 px-6 py-2 rounded-md flex gap-2 items-center text-white uppercase hover:scale-105 hover:bg-blue-700">
             <FcHome className="text-xl" /> <p>Sell or rent your home</p>
           </button>
         </Link>

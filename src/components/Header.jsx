@@ -28,9 +28,9 @@ const Header = () => {
   });
 
   return (
-    <>
-      <div className="h-16 shadow-md text-black bg-white">
-        <div className="px-4 md:px-8 lg:px-12 flex items-center justify-between h-full">
+    <div className="bg-yellow-600">
+      <div className="h-16 shadow-md text-black bg-white z-50 fixed top-0 left-0 w-full">
+        <div className="px-4 md:px-8 lg:px-12 flex items-center justify-between h-full z-50">
           {/* Logo */}
           <Link href="/">
             <h1 className="font-bold text-xl md:text-2xl lg:text-3xl text-red-500">
@@ -76,8 +76,9 @@ const Header = () => {
           </ul>
         </div>
       </div>
+
       <Sidemenu showSidemenu={showSidemenu} />
-    </>
+    </div>
   );
 };
 

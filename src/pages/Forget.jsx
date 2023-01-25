@@ -22,7 +22,7 @@ const Forget = () => {
   };
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-16">
         <form className="mt-4 w-full px-4 md:w-[350px]">
           <h1 className="text-center text-xl mt-4 md:text-2xl font-bold mb-6">
             Forget Password

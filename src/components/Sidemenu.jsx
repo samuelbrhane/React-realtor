@@ -16,7 +16,7 @@ const Sidemenu = ({ showSidemenu }) => {
   });
   return (
     <div
-      className={`md:hidden fixed top-16  bottom-0 text-black px-12 sm:px-18 bg-gray-200 ${
+      className={`md:hidden fixed top-16  bottom-0 text-black px-12 sm:px-18 z-0 bg-gray-200 ${
         showSidemenu ? "showSidemenu" : "hideSidemenu"
       }`}
     >

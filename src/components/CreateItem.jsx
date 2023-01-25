@@ -13,6 +13,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
     offer,
     regular,
     discounted,
+    latitude,
+    longitude,
   } = listData;
 
   return (
@@ -21,17 +23,21 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
         className="px-4 font-bold flex flex-col gap-4 items-start mt-4"
         onSubmit={handleSubmit}
       >
+        {/* Name */}
         <div>
           <p>Name</p>
           <input
             type="text"
             placeholder="Name"
+            name="name"
             value={name}
             onChange={handleChange}
             required
             className="mt-1 w-[330px] md:w-[410px] outline-none px-2 py-1 shadow-md rounded"
           />
         </div>
+
+        {/* Rent or Sell */}
         <div>
           <p>Rent / Sell</p>
           <div className="flex items-center gap-[10px] mt-1 font-semibold">
@@ -63,6 +69,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             </button>
           </div>
         </div>
+
+        {/* Parking Spot */}
         <div>
           <p>Parking Spot</p>
           <div className="flex items-center gap-[10px] mt-1 font-semibold">
@@ -94,6 +102,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             </button>
           </div>
         </div>
+
+        {/* Furnished */}
         <div>
           <p>Furnished</p>
           <div className="flex items-center gap-[10px] mt-1 font-semibold">
@@ -125,6 +135,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             </button>
           </div>
         </div>
+
+        {/* Bedrooms and Baths */}
         <div className="flex gap-[18px]">
           <div>
             <p>Bedrooms</p>
@@ -147,6 +159,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             />
           </div>
         </div>
+
+        {/* Address */}
         <div>
           <p>Address</p>
           <textarea
@@ -159,6 +173,43 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             className="mt-1 w-[330px] md:w-[410px] px-3 py-1 outline-none shadow-md"
           ></textarea>
         </div>
+
+        {/* Geolocation */}
+        <div className="flex gap-[10px]">
+          <div>
+            <p>Latitude</p>
+            <div className="flex items-center gap-1">
+              <input
+                type="number"
+                name="latitude"
+                min={-90}
+                max={90}
+                value={latitude}
+                onChange={handleChange}
+                className="mt-1 pl-3 py-1 rounded w-[100px] md:w-[150px] outline-none shadow-md hover:shadow-lg"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <p>Longitude</p>
+            <div className="flex items-center gap-1">
+              <input
+                type="number"
+                name="longitude"
+                min={-180}
+                max={180}
+                value={longitude}
+                onChange={handleChange}
+                className="mt-1 pl-3 py-1 rounded w-[100px] md:w-[150px] outline-none shadow-md hover:shadow-lg"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Description */}
         <div>
           <p>Description</p>
           <textarea
@@ -171,6 +222,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             className="mt-1 w-[330px] md:w-[410px] px-3 py-1 outline-none shadow-md"
           ></textarea>
         </div>
+
+        {/* Offer */}
         <div>
           <p>Offer</p>
           <div className="flex items-center gap-[10px] mt-1 font-semibold">
@@ -202,6 +255,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             </button>
           </div>
         </div>
+
+        {/* Regular and Discount Price */}
         <div className="flex gap-[10px]">
           <div>
             <p>Regular Price</p>
@@ -236,6 +291,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             </div>
           )}
         </div>
+
+        {/* Images */}
         <div>
           <p>Images</p>
           <input
@@ -248,6 +305,8 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
             accept=".jpg,.png,jpeg"
           />
         </div>
+
+        {/*Submit */}
         <button
           type="submit"
           className="w-[330px] md:w-[410px] bg-blue-500 text-white rounded py-2 hover:scale-105 hover:bg-blue-700 transition duration-200 ease-in-out"

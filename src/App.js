@@ -8,7 +8,7 @@ import {
   Profile,
   CreateList,
 } from "./pages";
-import { Header, ProfileRoute, AuthRoute } from "./components";
+import { Header, ProtectRoute, AuthRoute } from "./components";
 
 const App = () => {
   return (
@@ -25,10 +25,12 @@ const App = () => {
           </Route>
           <Route path="/forget" element={<Forget />} />
           <Route path="/offers" element={<Offers />} />
-          <Route path="/profile" element={<ProfileRoute />}>
+          <Route path="/profile" element={<ProtectRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
-          <Route path="/createList" element={<CreateList />} />
+          <Route path="/createList" element={<ProtectRoute />}>
+            <Route path="/createList" element={<CreateList />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </main>
