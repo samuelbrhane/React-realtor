@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateItem = ({ listData, handleChange, handleSubmit }) => {
+const CreateItem = ({ listData, handleChange, handleSubmit, imageChange }) => {
   const {
     type,
     name,
@@ -15,6 +15,7 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
     discounted,
     latitude,
     longitude,
+    size,
   } = listData;
 
   return (
@@ -136,7 +137,7 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
           </div>
         </div>
 
-        {/* Bedrooms and Baths */}
+        {/* Bedrooms,Baths and size */}
         <div className="flex gap-[18px]">
           <div>
             <p>Bedrooms</p>
@@ -157,6 +158,21 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
               onChange={handleChange}
               className="outline-none rounded pl-2 py-1 w-20 mt-1 shadow-md hover:shadow-lg"
             />
+          </div>
+          <div>
+            <p>Size</p>
+            <div className="flex gap-1 items-center">
+              <input
+                type="number"
+                name="size"
+                value={size}
+                onChange={handleChange}
+                className="outline-none rounded pl-2 py-1 w-20 mt-1 shadow-md hover:shadow-lg"
+              />
+              <p className="text-lg font-light">
+                m <sup>2</sup>
+              </p>
+            </div>
           </div>
         </div>
 
@@ -182,8 +198,9 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
               <input
                 type="number"
                 name="latitude"
-                min={-90}
-                max={90}
+                step="0.01"
+                min="-90"
+                max="90"
                 value={latitude}
                 onChange={handleChange}
                 className="mt-1 pl-3 py-1 rounded w-[100px] md:w-[150px] outline-none shadow-md hover:shadow-lg"
@@ -198,8 +215,9 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
               <input
                 type="number"
                 name="longitude"
-                min={-180}
-                max={180}
+                step="0.01"
+                min="-180"
+                max="180"
                 value={longitude}
                 onChange={handleChange}
                 className="mt-1 pl-3 py-1 rounded w-[100px] md:w-[150px] outline-none shadow-md hover:shadow-lg"
@@ -298,8 +316,7 @@ const CreateItem = ({ listData, handleChange, handleSubmit }) => {
           <input
             type="file"
             className="mt-1 bg-white rounded font-semibold"
-            name="images"
-            onChange={handleChange}
+            onChange={imageChange}
             multiple={true}
             required
             accept=".jpg,.png,jpeg"

@@ -2,13 +2,23 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase/config";
-import { doc, updateDoc } from "firebase/firestore";
-import { ProfileForm } from "../components";
+import {
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { ListCard, ProfileForm } from "../components";
 import { FcHome } from "react-icons/fc";
+import { useEffect } from "react";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [changeData, setChangeData] = useState(false);
+  const [listings, setListings] = useState([]);
   const [userData, setUserData] = useState({
     fullName: auth.currentUser.displayName,
     email: auth.currentUser.email,
@@ -36,6 +46,28 @@ const Profile = () => {
     }
   };
 
+  // fetch user list
+  useEffect(() => {
+    const fetchLists = async () => {
+      const listingRef = collection(db, "listings");
+      const q = query(
+        listingRef,
+        where("creator", "==", auth.currentUser.uid),
+        orderBy("timestamp", "desc")
+      );
+      const querySnap = await getDocs(q);
+      let listings = [];
+      querySnap.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+      setListings(listings);
+    };
+    fetchLists();
+  }, []);
+
   return (
     <>
       <ProfileForm
@@ -51,6 +83,16 @@ const Profile = () => {
             <FcHome className="text-xl" /> <p>Sell or rent your home</p>
           </button>
         </Link>
+      </div>
+      <div className="mt-3">
+        <h1 className="text-lg md:text-xl font-bold mb-5 mt-2 text-center text-red-400">
+          My <span className="text-black">Lists</span>
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-2 px-4 md:px-8 lg:px-12 gap-4 mb-8">
+          {listings.map((list, index) => (
+            <ListCard key={index} list={list} />
+          ))}
+        </div>
       </div>
     </>
   );

@@ -7,6 +7,7 @@ import {
   Offers,
   Profile,
   CreateList,
+  Details,
 } from "./pages";
 import { Header, ProtectRoute, AuthRoute } from "./components";
 
@@ -30,6 +31,9 @@ const App = () => {
           </Route>
           <Route path="/createList" element={<ProtectRoute />}>
             <Route path="/createList" element={<CreateList />} />
+          </Route>
+          <Route path="/details/:type/:id" element={<ProtectRoute />}>
+            <Route path="/details/:type/:id" element={<Details />} />
           </Route>
         </Routes>
       </BrowserRouter>

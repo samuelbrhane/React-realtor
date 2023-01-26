@@ -31,4 +31,7 @@
   .typeBtn {
     @apply w-[160px] md:w-[200px] shadow-lg hover:shadow-xl px-2 py-1 rounded uppercase;
   }
+  .rect {
+    @apply bg-green-500 w-4 h-4 rounded;
+  }
 }

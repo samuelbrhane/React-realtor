@@ -17,6 +17,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 const CreateList = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState([]);
   const [listData, setListData] = useState({
     type: "rent",
     name: "",
@@ -29,24 +30,26 @@ const CreateList = () => {
     offer: "no",
     regular: 0,
     discounted: 0,
-    images: null,
     latitude: 0,
     longitude: 0,
+    size: 0,
     creator: auth.currentUser.uid,
   });
 
   // Handle input changes
   const handleChange = (e) => {
-    if (e.target.files) {
-      setListData((prev) => ({
-        ...prev,
-        images: e.target.files,
-      }));
-    } else {
-      setListData((prev) => ({
-        ...prev,
-        [e.target.name]: e.target.value,
-      }));
+    setListData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  // handle image file
+  const imageChange = (e) => {
+    for (let i = 0; i < e.target.files.length; i++) {
+      const newImage = e.target.files[i];
+      newImage["id"] = Math.random();
+      setImages((prev) => [...prev, newImage]);
     }
   };
 
@@ -62,68 +65,65 @@ const CreateList = () => {
     }
 
     // limit the number of images
-    if (listData.images.length > 7) {
+    if (images.length > 7) {
       setLoading(false);
       return toast.error("The number of images should not be greater than 7.");
     }
 
-    async function storeImage(image) {
-      return new Promise((resolve, reject) => {
-        const storage = getStorage();
-        const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
-        const storageRef = ref(storage, filename);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-            }
-          },
-          (error) => {
-            // Handle unsuccessful uploads
-            reject(error);
-          },
-          () => {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              resolve(downloadURL);
-            });
+    // Upload images to firebase storage
+    let promises = [];
+    let imageUrls = [];
+    images.map((image) => {
+      const storage = getStorage();
+      const filename = `${auth.currentUser.uid}-${uuidv4()}-${image.name}`;
+      const storageRef = ref(storage, filename);
+      const uploadTask = uploadBytesResumable(storageRef, image);
+      promises.push(uploadTask);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
           }
-        );
-      });
-    }
-
-    const imgUrls = await Promise.all(
-      [...listData.images].map((image) => storeImage(image))
-    ).catch((error) => {
-      setLoading(false);
-      toast.error("Images not uploaded");
-      return;
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          toast.error("Image can not upload.");
+        },
+        async () => {
+          // Handle successful uploads on complete
+          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            imageUrls.push(downloadURL);
+          });
+        }
+      );
     });
 
-    const formData = {
-      ...listData,
-      imgUrls,
-      timestamp: serverTimestamp(),
-    };
+    Promise.all(promises).then(() => {
+      const formData = {
+        ...listData,
+        imageUrls,
+        timestamp: serverTimestamp(),
+      };
+      formData.offer === "no" && delete formData.discounted;
+      uploadInfo(formData);
+    });
+  };
 
-    delete formData.images;
-    !listData.offer && delete formData.discounted;
-    await addDoc(collection(db, "listings"), formData);
+  // Upload list info to database
+  const uploadInfo = async (formData) => {
+    console.log("formData", formData);
+    const docRef = await addDoc(collection(db, "listings"), formData);
     setLoading(false);
-    navigate("/");
+    navigate(`/details/${listData.type}/${docRef.id}`);
   };
 
   // return spinner component
@@ -139,6 +139,7 @@ const CreateList = () => {
           listData={listData}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
+          imageChange={imageChange}
         />
       </div>
       <ToastContainer
