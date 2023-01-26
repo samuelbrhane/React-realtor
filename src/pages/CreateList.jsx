@@ -12,7 +12,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { auth, db } from "../firebase/config";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
 const CreateList = () => {
   const navigate = useNavigate();
@@ -111,7 +111,7 @@ const CreateList = () => {
       const formData = {
         ...listData,
         imageUrls,
-        timestamp: serverTimestamp(),
+        timestamp: new Date().getTime(),
       };
       formData.offer === "no" && delete formData.discounted;
       uploadInfo(formData);

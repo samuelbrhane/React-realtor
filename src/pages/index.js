@@ -6,5 +6,16 @@ import Offers from "./Offers";
 import Profile from "./Profile";
 import CreateList from "./CreateList";
 import Details from "./Details";
+import EditList from "./EditList";
 
-export { Home, Forget, Login, Register, Offers, Profile, CreateList, Details };
+export {
+  Home,
+  Forget,
+  Login,
+  Register,
+  Offers,
+  Profile,
+  CreateList,
+  Details,
+  EditList,
+};

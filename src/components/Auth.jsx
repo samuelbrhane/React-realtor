@@ -10,8 +10,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../firebase/config";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Auth = ({ head }) => {
   const [inputData, setInputData] = useState({
@@ -100,18 +99,6 @@ const Auth = ({ head }) => {
           />
         </div>
       </div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </>
   );
 };

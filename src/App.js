@@ -8,8 +8,11 @@ import {
   Profile,
   CreateList,
   Details,
+  EditList,
 } from "./pages";
 import { Header, ProtectRoute, AuthRoute } from "./components";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
@@ -35,7 +38,22 @@ const App = () => {
           <Route path="/details/:type/:id" element={<ProtectRoute />}>
             <Route path="/details/:type/:id" element={<Details />} />
           </Route>
+          <Route path="/editList/:id" element={<ProtectRoute />}>
+            <Route path="/editList/:id" element={<EditList />} />
+          </Route>
         </Routes>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </BrowserRouter>
     </main>
   );

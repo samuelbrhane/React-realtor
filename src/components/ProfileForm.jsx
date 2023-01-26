@@ -30,7 +30,7 @@ const ProfileForm = ({
           value={userData.email}
           disabled
         />
-        <div className="text-[12px] sm:text-sm md:text-[16px] font-light mb-4 flex justify-between items-center px-2">
+        <div className="text-[12px] sm:text-sm md:text-[16px] font-light mb-4 flex justify-between items-start px-2">
           <p className="mb-2">
             Change User Name? {""}
             <button
@@ -42,7 +42,7 @@ const ProfileForm = ({
           </p>
 
           <button
-            className="text-blue-600 hover:text-blue-500 font-semibold"
+            className="text-blue-600 hover:text-blue-500 font-semibold flex items-center"
             onClick={handleSignout}
           >
             Sign out
