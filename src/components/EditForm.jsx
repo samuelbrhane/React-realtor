@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateItem = ({ listData, handleChange, handleSubmit, imageChange }) => {
+const EditForm = ({ listData, handleChange, handleEdit, imageChange }) => {
   const {
     type,
     name,
@@ -22,7 +22,7 @@ const CreateItem = ({ listData, handleChange, handleSubmit, imageChange }) => {
     <div className="flex justify-center mb-8">
       <form
         className="px-4 font-bold flex flex-col gap-4 items-start mt-4"
-        onSubmit={handleSubmit}
+        onSubmit={handleEdit}
       >
         {/* Name */}
         <div>
@@ -318,7 +318,6 @@ const CreateItem = ({ listData, handleChange, handleSubmit, imageChange }) => {
             className="mt-1 bg-white rounded font-semibold"
             onChange={imageChange}
             multiple={true}
-            required
             accept=".jpg,.png,jpeg"
           />
         </div>
@@ -328,11 +327,11 @@ const CreateItem = ({ listData, handleChange, handleSubmit, imageChange }) => {
           type="submit"
           className="w-[330px] md:w-[410px] bg-blue-500 text-white rounded py-2 hover:scale-105 hover:bg-blue-700 transition duration-200 ease-in-out"
         >
-          Create List
+          Edit List
         </button>
       </form>
     </div>
   );
 };
 
-export default CreateItem;
+export default EditForm;

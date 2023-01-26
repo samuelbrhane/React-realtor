@@ -6,9 +6,10 @@ import ProtectRoute from "./ProtectRoute";
 import Spinner from "./Spinner";
 import AuthRoute from "./AuthRoute";
 import ProfileForm from "./ProfileForm";
-import CreateItem from "./CreateItem";
+import ListForm from "./ListForm";
 import HouseDetails from "./HouseDetails";
 import ListCard from "./ListCard";
+import EditForm from "./EditForm";
 
 export {
   Header,
@@ -19,7 +20,8 @@ export {
   Spinner,
   AuthRoute,
   ProfileForm,
-  CreateItem,
+  ListForm,
   HouseDetails,
   ListCard,
+  EditForm,
 };

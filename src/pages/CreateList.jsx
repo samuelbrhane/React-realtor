@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { CreateItem, Spinner } from "../components";
+import { ListForm, Spinner } from "../components";
 import { useNavigate } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
-
 import {
   getStorage,
   ref,
@@ -71,59 +69,64 @@ const CreateList = () => {
     }
 
     // Upload images to firebase storage
-    let promises = [];
-    let imageUrls = [];
-    images.map((image) => {
-      const storage = getStorage();
-      const filename = `${auth.currentUser.uid}-${uuidv4()}-${image.name}`;
-      const storageRef = ref(storage, filename);
-      const uploadTask = uploadBytesResumable(storageRef, image);
-      promises.push(uploadTask);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
+    const storeImage = async (image) => {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage();
+        const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+        const storageRef = ref(storage, filename);
+        const uploadTask = uploadBytesResumable(storageRef, image);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+              default:
+                console.log("Uploaded");
+            }
+          },
+          (error) => {
+            // Handle unsuccessful uploads
+            reject(error);
+          },
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
           }
-        },
-        (error) => {
-          // Handle unsuccessful uploads
-          toast.error("Image can not upload.");
-        },
-        async () => {
-          // Handle successful uploads on complete
-          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            imageUrls.push(downloadURL);
-          });
-        }
-      );
+        );
+      });
+    };
+
+    const imageUrls = await Promise.all(
+      [...images].map((image) => storeImage(image))
+    ).catch((error) => {
+      setLoading(false);
+      toast.error("Images not uploaded");
+      return;
     });
 
-    Promise.all(promises).then(() => {
-      const formData = {
-        ...listData,
-        imageUrls,
-        timestamp: new Date().getTime(),
-      };
-      formData.offer === "no" && delete formData.discounted;
-      uploadInfo(formData);
-    });
-  };
-
-  // Upload list info to database
-  const uploadInfo = async (formData) => {
-    console.log("formData", formData);
+    const formData = {
+      ...listData,
+      imageUrls,
+      timestamp: new Date().getTime(),
+      creator: auth.currentUser.uid,
+    };
     const docRef = await addDoc(collection(db, "listings"), formData);
     setLoading(false);
-    navigate(`/details/${listData.type}/${docRef.id}`);
+    toast.success("Listing created");
+    navigate(`/details/${formData.type}/${docRef.id}`);
   };
 
   // return spinner component
@@ -135,25 +138,13 @@ const CreateList = () => {
         <h1 className="text-center font-bold mt-3 text-xl md:text-2xl lg:text-3xl text-red-500">
           Create a <span className="text-black">List</span>
         </h1>
-        <CreateItem
+        <ListForm
           listData={listData}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           imageChange={imageChange}
         />
       </div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </>
   );
 };
