@@ -24,12 +24,12 @@ const ListForm = ({ listData, handleChange, handleSubmit, imageChange }) => {
         className="px-4 font-bold flex flex-col gap-4 items-start mt-4"
         onSubmit={handleSubmit}
       >
-        {/* Name */}
+        {/* Property Type */}
         <div>
-          <p>Name</p>
+          <p>Property Type</p>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Property Type"
             name="name"
             value={name}
             onChange={handleChange}

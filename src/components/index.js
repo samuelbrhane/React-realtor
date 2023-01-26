@@ -7,7 +7,6 @@ import Spinner from "./Spinner";
 import AuthRoute from "./AuthRoute";
 import ProfileForm from "./ProfileForm";
 import ListForm from "./ListForm";
-import HouseDetails from "./HouseDetails";
 import ListCard from "./ListCard";
 import EditForm from "./EditForm";
 
@@ -21,7 +20,6 @@ export {
   AuthRoute,
   ProfileForm,
   ListForm,
-  HouseDetails,
   ListCard,
   EditForm,
 };

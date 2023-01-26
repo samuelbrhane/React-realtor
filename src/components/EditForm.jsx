@@ -26,10 +26,10 @@ const EditForm = ({ listData, handleChange, handleEdit, imageChange }) => {
       >
         {/* Name */}
         <div>
-          <p>Name</p>
+          <p>Property Type</p>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Property Type"
             name="name"
             value={name}
             onChange={handleChange}

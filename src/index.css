@@ -4,8 +4,16 @@
 
 @layer base {
   body {
-    @apply bg-[#f3eeee];
+    @apply bg-[#f2f7f6];
   }
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  right: 10px;
+  padding: 30px;
 }
 
 @layer components {
