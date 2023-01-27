@@ -31,7 +31,7 @@ const Listings = ({ title, name }) => {
       setLoading(false);
     };
     fetchOffers();
-  }, []);
+  }, [name]);
   if (loading) return <Spinner />;
   return (
     <div className="pt-20">

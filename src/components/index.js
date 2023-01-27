@@ -13,6 +13,7 @@ import OfferListings from "./OfferListings";
 import SaleListings from "./SaleListings";
 import RentListings from "./RentListings";
 import Listings from "./Listings";
+import ContactLandlord from "./ContactLandlord";
 
 export {
   Header,
@@ -30,4 +31,5 @@ export {
   SaleListings,
   RentListings,
   Listings,
+  ContactLandlord,
 };

@@ -47,13 +47,7 @@ const Auth = ({ head }) => {
     e.preventDefault();
     const { email, password } = inputData;
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      console.log(user);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (error) {
       toast.error(error.code.replace("auth/", ""));

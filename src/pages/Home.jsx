@@ -85,9 +85,13 @@ const Home = () => {
                   Price: $
                   {data.type === "sale" ? (
                     data.regular
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   ) : (
                     <span>
-                      {data.regular}
+                      {data.regular
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       <span className="text-sm">/month</span>
                     </span>
                   )}

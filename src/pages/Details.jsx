@@ -2,7 +2,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 import { useParams } from "react-router-dom";
-import { Spinner } from "../components";
+import { Spinner, ContactLandlord } from "../components";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -22,6 +22,8 @@ const Details = () => {
   const [loading, setLoading] = useState(true);
   const position = [listing?.latitude, listing?.longitude];
   const params = useParams();
+
+  // fetch listing info
   useEffect(() => {
     const fetchListing = async () => {
       const docRef = doc(db, "listings", params.id);
@@ -35,6 +37,7 @@ const Details = () => {
   }, [params.id]);
 
   if (loading) return <Spinner />;
+
   return (
     <section className="mt-16 mb-6 relative">
       {/* Image Slider */}
@@ -81,11 +84,17 @@ const Details = () => {
 
           {/* Price */}
           <h1 className="my-2">
-            <span className="font-bold text-2xl">${listing.regular}</span>
+            <span className="font-bold text-2xl">
+              $
+              {listing.regular.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </span>
             {listing.type === "rent" && <span>/mo</span>}
           </h1>
           <h3>
-            {listing.discounted > 0 && `Final Price: $${listing.discounted}`}
+            {listing.discounted > 0 &&
+              `Final Price: $${listing.discounted
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
           </h3>
 
           {/* Bed,Bath and Size */}
@@ -166,6 +175,8 @@ const Details = () => {
               </div>
             </div>
           )}
+          {/* Contact landlord */}
+          <ContactLandlord listing={listing} />
         </div>
 
         <MapContainer center={position} zoom={12} scrollWheelZoom={true}>

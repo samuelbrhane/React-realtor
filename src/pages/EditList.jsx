@@ -93,8 +93,6 @@ const EditList = () => {
       `https://nominatim.openstreetmap.org/search?format=json&limit=3&q=${listData.address}`
     );
 
-    console.log("data", data);
-
     if (data.length === 0) {
       setLoading(false);
       return toast.error("Invalid address");

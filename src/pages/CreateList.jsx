@@ -138,7 +138,6 @@ const CreateList = () => {
       timestamp: new Date().getTime(),
       creator: auth.currentUser.uid,
     };
-    console.log("formData", formData);
     const docRef = await addDoc(collection(db, "listings"), formData);
     setLoading(false);
     toast.success("Listing created");

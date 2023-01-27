@@ -56,7 +56,9 @@ const App = () => {
           </Route>
 
           {/* Listing detail info page */}
-          <Route path="/details/:type/:id" element={<Details />} />
+          <Route path="/details/:type/:id" element={<ProtectRoute />}>
+            <Route path="/details/:type/:id" element={<Details />} />
+          </Route>
 
           {/* Offers page */}
           <Route path="/offers" element={<Offers />} />
