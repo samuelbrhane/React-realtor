@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { db } from "../firebase/config";
-import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { useState } from "react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,17 +8,26 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import { Spinner } from "../components";
+import {
+  Spinner,
+  OfferListings,
+  RentListings,
+  SaleListings,
+} from "../components";
 import { Link } from "react-router-dom";
 
 const Home = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sliderListings, setSliderListings] = useState([]);
+  const [offerListings, setOfferListings] = useState([]);
+  const [saleListings, setSaleListings] = useState([]);
+  const [rentListings, setRentListings] = useState([]);
   // Fetch listings data
   useEffect(() => {
     const fetchListings = async () => {
       const docRef = collection(db, "listings");
-      const q = query(docRef, orderBy("timestamp", "desc"), limit(8));
+      const q = query(docRef, orderBy("timestamp", "desc"));
       const docSnap = await getDocs(q);
       let listings = [];
       docSnap.forEach((doc) => {
@@ -28,6 +37,16 @@ const Home = () => {
         });
       });
       setListings(listings);
+      setSliderListings(listings.slice(0, 8));
+      setOfferListings(
+        listings.filter((listing) => listing.data.offer === "yes")
+      );
+      setSaleListings(
+        listings.filter((listing) => listing.data.type === "sale")
+      );
+      setRentListings(
+        listings.filter((listing) => listing.data.type === "rent")
+      );
       setLoading(false);
     };
 
@@ -47,34 +66,46 @@ const Home = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 3500 }}
       >
-        {listings?.map((listing, index) => (
-          <SwiperSlide key={index}>
-            <Link to={`/details/${listing.data.type}/${listing.id}`}>
-              <div
-                className="relative w-full overflow-hidden h-[400px]"
-                style={{
-                  background: `url(${listing.data.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: "cover",
-                }}
-              ></div>
-              <p className="absolute top-4 left-4 z-30 bg-[#32a324] px-4 py-1 rounded-lg text-white font-medium text-lg">
-                {listing.data.name} for {listing.data.type}
-              </p>
-              <p className="absolute bottom-4 left-4 z-30 bg-[#2494a3] px-4 py-1 rounded-lg text-white font-medium text-lg">
-                Price: $
-                {listing.data.type === "sale" ? (
-                  listing.data.regular
-                ) : (
-                  <span>
-                    {listing.data.regular}
-                    <span className="text-sm">/month</span>
-                  </span>
-                )}
-              </p>
-            </Link>
-          </SwiperSlide>
-        ))}
+        {sliderListings?.map((listing, index) => {
+          const { id, data } = listing;
+          return (
+            <SwiperSlide key={index}>
+              <Link to={`/details/${data.type}/${id}`}>
+                <div
+                  className="relative w-full overflow-hidden h-[400px]"
+                  style={{
+                    background: `url(${data.imageUrls[0]}) center no-repeat`,
+                    backgroundSize: "cover",
+                  }}
+                ></div>
+                <p className="absolute md:top-4 md:left-4 top-2 left-2 z-30 bg-[#32a324] px-4 py-1 rounded-lg text-white font-medium text-lg">
+                  {data.name} for {data.type}
+                </p>
+                <p className="absolute md:bottom-4 md:left-4 bottom-2 left-2 z-30 bg-[#2494a3] px-4 py-1 rounded-lg text-white font-medium text-lg">
+                  Price: $
+                  {data.type === "sale" ? (
+                    data.regular
+                  ) : (
+                    <span>
+                      {data.regular}
+                      <span className="text-sm">/month</span>
+                    </span>
+                  )}
+                </p>
+              </Link>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
+
+      {/* Offer listings */}
+      <OfferListings offerListings={offerListings} />
+
+      {/* Sale listings */}
+      <SaleListings saleListings={saleListings} />
+
+      {/* Rent listings */}
+      <RentListings rentListings={rentListings} />
     </section>
   );
 };

@@ -4,7 +4,6 @@ import {
   Register,
   Login,
   Forget,
-  Offers,
   Profile,
   CreateList,
   Details,
@@ -28,7 +27,6 @@ const App = () => {
             <Route path="/login" element={<Login />} />
           </Route>
           <Route path="/forget" element={<Forget />} />
-          <Route path="/offers" element={<Offers />} />
           <Route path="/profile" element={<ProtectRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>

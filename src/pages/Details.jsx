@@ -65,10 +65,10 @@ const Details = () => {
       <div className="px-4 md:px-8 lg:px-12 mt-4 grid gap-5 grid-rows-2 lg:grid-rows-1 lg:grid-cols-2">
         <div className="">
           {/* Type and address */}
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-start">
             <div className="flex gap-1 items-center">
               <div className="rect" />
-              <p className="font-bold text-xl">
+              <p className="font-bold text-lg whitespace-nowrap md:text-xl">
                 For{" "}
                 {listing.type.charAt(0).toUpperCase() + listing.type.slice(1)}
               </p>
