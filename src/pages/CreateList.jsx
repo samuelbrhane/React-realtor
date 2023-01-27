@@ -11,6 +11,7 @@ import {
 } from "firebase/storage";
 import { auth, db } from "../firebase/config";
 import { addDoc, collection } from "firebase/firestore";
+import axios from "axios";
 
 const CreateList = () => {
   const navigate = useNavigate();
@@ -68,6 +69,20 @@ const CreateList = () => {
       return toast.error("The number of images should not be greater than 7.");
     }
 
+    // Check valid address
+    // Get latitude & longitude from address.
+    let { data } = await axios.get(
+      `https://nominatim.openstreetmap.org/search?format=json&limit=3&q=${listData.address}`
+    );
+
+    if (data.length === 0) {
+      setLoading(false);
+      return toast.error("Invalid address");
+    } else {
+      listData.latitude = data[0].lat;
+      listData.longitude = data[0].lon;
+    }
+
     // Upload images to firebase storage
     const storeImage = async (image) => {
       return new Promise((resolve, reject) => {
@@ -123,6 +138,7 @@ const CreateList = () => {
       timestamp: new Date().getTime(),
       creator: auth.currentUser.uid,
     };
+    console.log("formData", formData);
     const docRef = await addDoc(collection(db, "listings"), formData);
     setLoading(false);
     toast.success("Listing created");

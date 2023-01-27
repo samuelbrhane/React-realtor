@@ -15,10 +15,12 @@ import { GiSolarTime, GiResize } from "react-icons/gi";
 import { FaParking } from "react-icons/fa";
 import { MdChair } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 const Details = () => {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
+  const position = [listing?.latitude, listing?.longitude];
   const params = useParams();
   useEffect(() => {
     const fetchListing = async () => {
@@ -60,7 +62,7 @@ const Details = () => {
           addSuffix: true,
         }).replace("about", "")}
       </p>
-      <div className="px-4 md:px-8 lg:px-12 mt-4 grid gap-5 md:grid-cols-2">
+      <div className="px-4 md:px-8 lg:px-12 mt-4 grid gap-5 grid-rows-2 lg:grid-rows-1 lg:grid-cols-2">
         <div className="">
           {/* Type and address */}
           <div className="flex gap-4 items-center">
@@ -123,7 +125,7 @@ const Details = () => {
                     ""
                   )}
                 </p>
-                <p className="text-sm font-light">Time on Realtor.com</p>
+                <p className="text-sm font-light">Time on Realtor</p>
               </div>
             </div>
           </div>
@@ -165,7 +167,18 @@ const Details = () => {
             </div>
           )}
         </div>
-        <div></div>
+
+        <MapContainer center={position} zoom={12} scrollWheelZoom={true}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={position}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        </MapContainer>
       </div>
     </section>
   );

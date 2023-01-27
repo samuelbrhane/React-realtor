@@ -12,6 +12,7 @@ import {
 import { auth, db } from "../firebase/config";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect } from "react";
+import axios from "axios";
 
 const EditList = () => {
   const params = useParams();
@@ -50,7 +51,7 @@ const EditList = () => {
     };
     fetchData();
     setLoading(false);
-  }, [params.id]);
+  }, [params.id, navigate]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -84,6 +85,22 @@ const EditList = () => {
     if (images.length > 7) {
       setLoading(false);
       return toast.error("The number of images should not be greater than 7.");
+    }
+
+    // Check valid address
+    // Get latitude & longitude from address.
+    let { data } = await axios.get(
+      `https://nominatim.openstreetmap.org/search?format=json&limit=3&q=${listData.address}`
+    );
+
+    console.log("data", data);
+
+    if (data.length === 0) {
+      setLoading(false);
+      return toast.error("Invalid address");
+    } else {
+      listData.latitude = data[0].lat;
+      listData.longitude = data[0].lon;
     }
 
     // Upload images to firebase storage

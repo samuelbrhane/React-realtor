@@ -13,8 +13,6 @@ const EditForm = ({ listData, handleChange, handleEdit, imageChange }) => {
     offer,
     regular,
     discounted,
-    latitude,
-    longitude,
     size,
   } = listData;
 
@@ -188,43 +186,6 @@ const EditForm = ({ listData, handleChange, handleEdit, imageChange }) => {
             onChange={handleChange}
             className="mt-1 w-[330px] md:w-[410px] px-3 py-1 outline-none shadow-md"
           ></textarea>
-        </div>
-
-        {/* Geolocation */}
-        <div className="flex gap-[10px]">
-          <div>
-            <p>Latitude</p>
-            <div className="flex items-center gap-1">
-              <input
-                type="number"
-                name="latitude"
-                step="0.01"
-                min="-90"
-                max="90"
-                value={latitude}
-                onChange={handleChange}
-                className="mt-1 pl-3 py-1 rounded w-[100px] md:w-[150px] outline-none shadow-md hover:shadow-lg"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <p>Longitude</p>
-            <div className="flex items-center gap-1">
-              <input
-                type="number"
-                name="longitude"
-                step="0.01"
-                min="-180"
-                max="180"
-                value={longitude}
-                onChange={handleChange}
-                className="mt-1 pl-3 py-1 rounded w-[100px] md:w-[150px] outline-none shadow-md hover:shadow-lg"
-                required
-              />
-            </div>
-          </div>
         </div>
 
         {/* Description */}
