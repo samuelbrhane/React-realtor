@@ -12,6 +12,7 @@ import EditForm from "./EditForm";
 import OfferListings from "./OfferListings";
 import SaleListings from "./SaleListings";
 import RentListings from "./RentListings";
+import Listings from "./Listings";
 
 export {
   Header,
@@ -28,4 +29,5 @@ export {
   OfferListings,
   SaleListings,
   RentListings,
+  Listings,
 };

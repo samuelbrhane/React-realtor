@@ -3,12 +3,12 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { formatDistanceToNow } from "date-fns";
 import { Link, useNavigate } from "react-router-dom";
 
-const ListCard = ({ list, setDeleteId, setDeleteModal, page }) => {
+const ListCard = ({ list, setDeleteId, setDeleteModal, profile }) => {
   const { id, data } = list;
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-center mb-4">
+    <div className="flex justify-center mb-2">
       <div className="shadow-md bg-white rounded-t-md w-[300px] relative cursor-default overflow-hidden hover:shadow-xl">
         <div className="flex flex-col justify-between rounded-t-md h-full ">
           <Link to={`/details/${data.type}/${id}`}>
@@ -59,7 +59,7 @@ const ListCard = ({ list, setDeleteId, setDeleteModal, page }) => {
                 m<sup>2</sup>
               </span>
             </p>
-            {page !== "home" && (
+            {profile && (
               <div className="flex gap-2 items-center z-20">
                 <AiFillEdit
                   className="text-green-500 cursor-pointer"

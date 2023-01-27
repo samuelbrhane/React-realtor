@@ -110,6 +110,7 @@ const Profile = () => {
               list={list}
               setDeleteId={setDeleteId}
               setDeleteModal={setDeleteModal}
+              profile={true}
             />
           ))}
         </div>

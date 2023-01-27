@@ -6,6 +6,9 @@ import Profile from "./Profile";
 import CreateList from "./CreateList";
 import Details from "./Details";
 import EditList from "./EditList";
+import Offers from "./Offers";
+import Sale from "./Sale";
+import Rent from "./Rent";
 
 export {
   Home,
@@ -16,4 +19,7 @@ export {
   CreateList,
   Details,
   EditList,
+  Offers,
+  Sale,
+  Rent,
 };

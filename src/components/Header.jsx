@@ -47,6 +47,7 @@ const Header = () => {
 
           {/* Header Link */}
           <ul className="items-center gap-5 hidden md:flex">
+            {/* home page */}
             <Link
               to="/"
               className={`link ${
@@ -55,6 +56,38 @@ const Header = () => {
             >
               Home
             </Link>
+
+            {/* offers */}
+            <Link
+              to="/offers"
+              className={`link ${
+                pathRoute("/offers") ? "border-b-2 border-blue-400" : ""
+              }`}
+            >
+              Offers
+            </Link>
+
+            {/* sale */}
+            <Link
+              to="/sale"
+              className={`link ${
+                pathRoute("/sale") ? "border-b-2 border-blue-400" : ""
+              }`}
+            >
+              Sale
+            </Link>
+
+            {/* rent */}
+            <Link
+              to="/rent"
+              className={`link ${
+                pathRoute("/rent") ? "border-b-2 border-blue-400" : ""
+              }`}
+            >
+              Rent
+            </Link>
+
+            {/* profile or login */}
             <Link
               to={`/${userLogin.toLocaleLowerCase()}`}
               className={`link ${
