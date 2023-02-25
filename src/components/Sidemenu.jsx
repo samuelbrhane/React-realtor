@@ -16,7 +16,7 @@ const Sidemenu = ({ showSidemenu }) => {
   });
   return (
     <div
-      className={`md:hidden fixed top-16  bottom-0 text-black px-12 sm:px-18 z-30 bg-gray-200 ${
+      className={`md:hidden fixed top-16 z-40  bottom-0 text-black px-12 sm:px-18  bg-gray-200 ${
         showSidemenu ? "showSidemenu" : "hideSidemenu"
       }`}
     >
@@ -24,8 +24,18 @@ const Sidemenu = ({ showSidemenu }) => {
         <Link to="/" className="link">
           Home
         </Link>
+
         <Link to="/offers" className="link">
           Offers
+        </Link>
+        {/* sale */}
+        <Link to="/sale" className={`link`}>
+          Sale
+        </Link>
+
+        {/* rent */}
+        <Link to="/rent" className={`link `}>
+          Rent
         </Link>
         <Link to={`/${userLogin.toLocaleLowerCase()}`} className="link">
           {userLogin}
